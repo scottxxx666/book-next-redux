@@ -3,14 +3,16 @@
 import {useAppSelector} from "@/lib/hooks";
 import {addBook, removeBook, selectBooks} from "@/lib/book/bookSlice";
 import {useDispatch} from "react-redux";
+import {v4 as uuidv4} from 'uuid';
 
 export default function Home() {
   const books = useAppSelector(selectBooks);
   const dispatch = useDispatch();
 
-  function saveBook() {
+  function handleAddBook() {
+    const uuid = uuidv4();
     dispatch(addBook({
-      id: 'id 2',
+      id: uuid,
       name: 'Book 2',
       category: 'Category 2',
       price: 101,
@@ -29,7 +31,7 @@ export default function Home() {
           <button onClick={() => dispatch(removeBook(book.id))}>-</button>
         </div>
       ))}
-      <button onClick={saveBook}>+</button>
+      <button onClick={handleAddBook}>+</button>
     </main>
   )
 }
