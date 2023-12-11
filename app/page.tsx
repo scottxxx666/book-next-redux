@@ -4,6 +4,7 @@ import {useAppSelector} from "@/lib/hooks";
 import {addBook, removeBook, selectBooks} from "@/lib/book/bookSlice";
 import {useDispatch} from "react-redux";
 import {v4 as uuidv4} from 'uuid';
+import {Box, Card, CardActions, CardContent, CardHeader, Stack, Typography} from "@mui/material";
 
 export default function Home() {
   const books = useAppSelector(selectBooks);
@@ -21,17 +22,31 @@ export default function Home() {
   }
 
   return (
-    <main>
+    <Box sx={{
+      width: "80vw",
+      maxWidth: "600px",
+      mx: "auto",
+      marginTop: "4%",
+    }}>
+      <Stack direction="row" justifyContent="space-between">
+        <Typography variant="h4">Book List</Typography>
+        <button onClick={handleAddBook}>+</button>
+      </Stack>
       {books.map(book => (
-        <div key={book.id}>
-          <h1>{book.name}</h1>
-          <div>{book.category}</div>
-          <div>{book.price}</div>
-          <p>{book.description}</p>
-          <button onClick={() => dispatch(removeBook(book.id))}>-</button>
-        </div>
+        <Card key={book.id}>
+          <CardHeader title={book.name} subheader={book.category}>
+          </CardHeader>
+          <Stack direction="row" justifyContent="space-between">
+            <CardContent>
+              <div>Price: {book.price}</div>
+              <p>{book.description}</p>
+            </CardContent>
+            <CardActions>
+              <button onClick={() => dispatch(removeBook(book.id))}>-</button>
+            </CardActions>
+          </Stack>
+        </Card>
       ))}
-      <button onClick={handleAddBook}>+</button>
-    </main>
+    </Box>
   )
 }
