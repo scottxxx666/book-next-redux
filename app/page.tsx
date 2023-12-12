@@ -1,7 +1,7 @@
 'use client'
 
 import {useAppSelector} from "@/lib/hooks";
-import {addBook, removeBook, selectBooks} from "@/lib/book/bookSlice";
+import {addBook, Book, removeBook, selectBooks} from "@/lib/book/bookSlice";
 import {useDispatch} from "react-redux";
 import {v4 as uuidv4} from 'uuid';
 import {
@@ -15,39 +15,39 @@ import {
   Stack, TextField,
   Typography
 } from "@mui/material";
-import {useState} from "react";
+import {ChangeEvent, useState} from "react";
 
 export default function Home() {
   const books = useAppSelector(selectBooks);
   const dispatch = useDispatch();
 
-  const [name, setName] = useState('');
-  const [category, setCategory] = useState('');
-  const [price, setPrice] = useState(0);
-  const [description, setDescription] = useState('');
+  const [open, setOpen] = useState(false);
+  const [book, setBook] = useState({} as Book);
 
   function createBook() {
     const uuid = uuidv4();
     dispatch(addBook({
       id: uuid,
-      name: name,
-      category: category,
-      price: price,
-      description: description,
+      name: book.name,
+      category: book.category,
+      price: book.price,
+      description: book.description,
     }))
 
-    setName('');
-    setCategory('');
-    setPrice(0);
-    setDescription('');
+    setBook({} as Book);
 
     closeNewBook()
   }
 
-  const [open, setOpen] = useState(false);
-
   function closeNewBook() {
     setOpen(false);
+  }
+
+  function handleBookChange(e: ChangeEvent<HTMLInputElement>) {
+    setBook(book => ({
+      ...book,
+      [e.target.name]: e.target.value
+    }))
   }
 
   return (
@@ -86,34 +86,38 @@ export default function Home() {
           <TextField
             margin="dense"
             label="Name"
+            name="name"
             type="string"
             fullWidth
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={book.name}
+            onChange={handleBookChange}
           />
           <TextField
             margin="dense"
             label="Category"
+            name="category"
             type="string"
             fullWidth
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
+            value={book.category}
+            onChange={handleBookChange}
           />
           <TextField
             margin="dense"
             label="Price"
+            name="price"
             type="number"
             fullWidth
-            value={price}
-            onChange={(e) => setPrice(parseInt(e.target.value))}
+            value={book.price}
+            onChange={handleBookChange}
           />
           <TextField
             margin="dense"
             label="Description"
+            name="description"
             type="number"
             fullWidth
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            value={book.description}
+            onChange={handleBookChange}
             multiline
           />
         </DialogContent>
