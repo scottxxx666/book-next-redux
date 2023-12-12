@@ -4,11 +4,10 @@ import {useDispatch} from "react-redux";
 import {v4 as uuidv4} from "uuid";
 
 export default function BookCreate({open, close}: { open: boolean, close: () => void }) {
-
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   function createBook(book: Book) {
-    const uuid = uuidv4();
+    const uuid = uuidv4()
     dispatch(addBook({
       id: uuid,
       name: book.name,

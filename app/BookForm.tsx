@@ -1,26 +1,30 @@
 import {Dialog, DialogActions, DialogContent, DialogTitle, TextField} from "@mui/material";
-import {ChangeEvent, useState} from "react";
-import {addBook, Book} from "@/lib/book/bookSlice";
-import {v4 as uuidv4} from "uuid";
-import {useDispatch} from "react-redux";
+import {ChangeEvent, useCallback, useEffect, useState} from "react";
+import {Book} from "@/lib/book/bookSlice";
 
-function initBook() {
-  return {
-    id: "",
-    name: "",
-    category: "",
-    price: 0,
-    description: "",
-  }
-}
-
-export default function BookForm({open, close, save}: {
+export default function BookForm({open, close, save, bookProp}: {
   open: boolean,
   close: () => void,
-  save: (book: Book) => void
+  save: (book: Book) => void,
+  bookProp?: Book,
 }) {
+  const initBook = useCallback(() => {
+    return {
+      ...bookProp ?? {
+        id: "",
+        name: "",
+        category: "",
+        price: 0,
+        description: "",
+      }
+    }
+  }, [bookProp])
 
   const [book, setBook] = useState(initBook());
+
+  useEffect(() => {
+    setBook(initBook())
+  }, [bookProp, initBook])
 
   function createBook() {
     save(book)
@@ -38,7 +42,7 @@ export default function BookForm({open, close, save}: {
   }
 
   function cancel() {
-    setBook({} as Book);
+    setBook(initBook());
     close()
   }
 
