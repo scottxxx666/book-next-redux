@@ -49,14 +49,13 @@ export default function BookList() {
         </IconButton>
       </Stack>
       {books.map(book => (
-        <Card key={book.id}>
+        <Card key={book.id} sx={{mb: 2}}>
           <Stack direction="row" justifyContent="space-between">
             <CardActionArea onClick={() => openBookEdit(book)}>
-              <CardHeader title={book.name} subheader={book.category}>
-              </CardHeader>
+              <CardHeader title={book.name} subheader={book.category}/>
               <CardContent>
-                <div>Price: {book.price}</div>
-                <p>{book.description}</p>
+                <Typography>Price: {book.price}</Typography>
+                <Typography sx={{whiteSpace: "pre-wrap"}}>{book.description}</Typography>
               </CardContent>
             </CardActionArea>
             <CardActions>

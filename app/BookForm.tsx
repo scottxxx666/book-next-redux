@@ -52,7 +52,7 @@ export default function BookForm({open, close, save, bookProp}: {
       onClose={close}
       fullWidth
     >
-      <DialogTitle>New Book</DialogTitle>
+      <DialogTitle>{bookProp ? "Edit Book" : "New Book"}</DialogTitle>
       <DialogContent>
         <TextField
           margin="dense"
@@ -77,6 +77,7 @@ export default function BookForm({open, close, save, bookProp}: {
           label="Price"
           name="price"
           type="number"
+          inputProps={{ min: 0 }}
           fullWidth
           value={book.price}
           onChange={handleBookChange}
