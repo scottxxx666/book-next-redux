@@ -1,4 +1,4 @@
-import {Dialog, DialogActions, DialogContent, DialogTitle, TextField} from "@mui/material";
+import {Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField} from "@mui/material";
 import {ChangeEvent, useCallback, useEffect, useState} from "react";
 import {Book} from "@/lib/book/bookSlice";
 
@@ -93,8 +93,8 @@ export default function BookForm({open, close, save, bookProp}: {
         />
       </DialogContent>
       <DialogActions>
-        <button onClick={cancel}>Cancel</button>
-        <button onClick={createBook}>Save</button>
+        <Button variant="text" onClick={cancel}>Cancel</Button>
+        <Button variant="text" onClick={createBook}>Save</Button>
       </DialogActions>
     </Dialog>
   )

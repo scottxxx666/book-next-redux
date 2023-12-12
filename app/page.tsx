@@ -3,10 +3,22 @@
 import {useAppSelector} from "@/lib/hooks";
 import {Book, removeBook, selectBooks} from "@/lib/book/bookSlice";
 import {useDispatch} from "react-redux";
-import {Box, Card, CardActionArea, CardActions, CardContent, CardHeader, Stack, Typography} from "@mui/material";
+import {
+  Box,
+  Card,
+  CardActionArea,
+  CardActions,
+  CardContent,
+  CardHeader,
+  IconButton,
+  Stack,
+  Typography
+} from "@mui/material";
 import {useState} from "react";
 import BookCreate from "@/app/BookCreate";
 import BookEdit from "@/app/BookEdit";
+import AddIcon from '@mui/icons-material/Add';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 export default function BookList() {
   const books = useAppSelector(selectBooks);
@@ -30,7 +42,11 @@ export default function BookList() {
     }}>
       <Stack direction="row" justifyContent="space-between">
         <Typography variant="h4">Book List</Typography>
-        <button onClick={() => setBookCreateToggle(true)}>+</button>
+        <IconButton
+          arial-label="add a book"
+          onClick={() => setBookCreateToggle(true)}>
+          <AddIcon/>
+        </IconButton>
       </Stack>
       {books.map(book => (
         <Card key={book.id}>
@@ -44,7 +60,11 @@ export default function BookList() {
               </CardContent>
             </CardActionArea>
             <CardActions>
-              <button onClick={() => dispatch(removeBook(book.id))}>-</button>
+              <IconButton
+                arial-label="delete the book"
+                onClick={() => dispatch(removeBook(book.id))}>
+                <DeleteIcon/>
+              </IconButton>
             </CardActions>
           </Stack>
         </Card>
